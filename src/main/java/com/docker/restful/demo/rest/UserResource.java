@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.docker.restful.demo.entities.User;
 import com.docker.restful.demo.services.UserService;
 
-
-//@RequestMapping("/users")
 @Path("/users")
 public class UserResource {
 
