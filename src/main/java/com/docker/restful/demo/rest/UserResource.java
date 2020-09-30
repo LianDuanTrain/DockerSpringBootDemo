@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 
 import com.docker.restful.demo.entities.User;
 import com.docker.restful.demo.services.UserService;
@@ -20,7 +21,7 @@ import com.docker.restful.demo.services.UserService;
 
 //@RequestMapping("/users")
 @Path("/users")
-public class UserResource {
+public class UserResource<K> {
 
 	@Autowired
 	private UserService userService;
@@ -29,8 +30,9 @@ public class UserResource {
     @GET
     @Produces("application/json")
     public Response getUsers() {
-    	final List<User> users = userService.findByPattern();
-		return Response.status(200).entity(users).build();
+    	List<User> list =  userService.findByPattern();
+		return Response.status(200).entity(list).build();
+    	
 	}
 
   

@@ -1,59 +1,77 @@
-package  com.docker.restful.demo.services;
+package com.docker.restful.demo.services;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.ws.rs.NotFoundException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import com.docker.restful.demo.entities.User;
 
-
-
 @Service
 public class UserService {
+	@Autowired
+	private RedisTemplate redisTemplate;
+//	Map<String, User> map = new ConcurrentHashMap<String, User>();
 
-	Map<String, User> map = new ConcurrentHashMap<String, User>();
-	
 	public List<User> findByPattern() {
-		return  new ArrayList(map.values());
+		
+		List<User> list = new ArrayList<User>();
+		Set<String> set = redisTemplate.keys("*");
+		for(String key :set) {
+			User user = (User)redisTemplate.opsForValue().get(key);
+			list.add(user);
+		}
+		return  list;
 	}
 
 	public User findById(final String userId) {
-		User user = map.get(userId);
-		if(user == null) {
+		User user = (User)redisTemplate.opsForValue().get(userId);
+		//User user = map.get(userId);
+		if (user == null) {
 			throw new NotFoundException("User does not exist in the DB");
 		}
 		return user;
 	}
 
 	public void save(final User user) {
-		String id = UUID.randomUUID().toString();;
+		String id = UUID.randomUUID().toString();
 		user.setId(id);
-		map.put(id, user);
-		
+		ValueOperations<String, User> operations = redisTemplate.opsForValue();
+		operations.set(id, user);
+		//map.put(id, user);
+
 	}
 
 	public void update(final User user) {
-		if(map.containsKey(user.getId())) {
-			map.put(user.getId(), user);
-		}else {
+		
+		if (redisTemplate.hasKey(user.getId())) {
+			String id = UUID.randomUUID().toString();
+			user.setId(id);
+			ValueOperations<String, User> operations = redisTemplate.opsForValue();
+			operations.set(id, user);
+		} else {
 			throw new NotFoundException("User does not exist in the DB");
 		}
 	}
 
 	public void delete(final String userId) {
 
-		if(map.containsKey(userId)) {
-			map.remove(userId);
-		}else {
+		if (redisTemplate.hasKey(userId)) {
+			redisTemplate.delete(redisTemplate);
+			
+		} else {
 			throw new NotFoundException("User does not exist in the DB");
 		}
 	}
-
 
 }
