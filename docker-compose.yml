@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+    jetty-war-data:
+        build: ./warData
+        container_name: wardatav1
+        networks:
+            - dataNet
+        volumes:
+            - war-data:/var/lib/jetty/webapps  
+    jetty-app:
+        container_name: jetty9431v1
+        image: jetty:9.4-jre8-slim
+        networks:
+            - webNet
+        depends_on:
+            - jetty-war-data
+        volumes:
+            - type: volume
+              source: war-data
+              target: /var/lib/jetty/webapps            
+        ports:
+            - "8080:8080" 
+volumes:
+    war-data: 
+networks:
+    webNet:  
+    dataNet:    
