@@ -65,6 +65,7 @@ public class UserResource {
     @DELETE
     @Path("/{id}")
     public Response  deleteUser(@PathParam("id") final String userId) {
+    	System.out.println("Change.");
     	userService.delete(userId);
     	return  Response.status(200).build();
 	}

@@ -7,6 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import com.docker.restful.demo.rest.SysInfoResource;
 import com.docker.restful.demo.rest.UserResource;
 
 @Configuration
@@ -17,6 +18,7 @@ public class AppConfig {
         public JerseyConfig() {
             this.packages("com.docker.restful.demo.*");
             register(UserResource.class);
+            register(SysInfoResource.class);
         }
     }
 
