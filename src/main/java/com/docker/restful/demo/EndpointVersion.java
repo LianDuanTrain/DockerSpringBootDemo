@@ -1,3 +1,5 @@
+
+
 package com.docker.restful.demo;
 
 
@@ -7,12 +9,12 @@ import javax.ws.rs.Path;
 
 @Named
 @Path("/")
-public class HelloEndpoint {
+public class EndpointVersion {
   
 
     @GET
-    public String hello() {
-        return "Hello World!";
+    public String getVersion() {
+        return "v1";
     }
 
   
