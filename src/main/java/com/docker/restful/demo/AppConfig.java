@@ -23,6 +23,7 @@ public class AppConfig {
             this.packages("com.docker.restful.demo.*");
             register(UserResource.class);
             register(SysInfoResource.class);
+            register( EndpointVersion.class);
         }
     }
 
