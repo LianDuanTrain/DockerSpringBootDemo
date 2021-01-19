@@ -14,7 +14,7 @@ public class EndpointVersion {
 
     @GET
     public String getVersion() {
-        return "v1";
+        return "v2";
     }
 
   

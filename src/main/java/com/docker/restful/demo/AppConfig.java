@@ -19,7 +19,7 @@ public class AppConfig {
     @Named
     static class JerseyConfig extends ResourceConfig {
         public JerseyConfig() {
-        	log.info("AppConfig version is V1");
+        	log.info("AppConfig version is V2");
             this.packages("com.docker.restful.demo.*");
             register(UserResource.class);
             register(SysInfoResource.class);
