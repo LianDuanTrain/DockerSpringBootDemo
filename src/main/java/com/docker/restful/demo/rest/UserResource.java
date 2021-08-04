@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.docker.restful.demo.entities.User;
 import com.docker.restful.demo.services.UserService;
@@ -28,6 +29,7 @@ public class UserResource {
 	   
     @GET
     @Produces("application/json")
+    @CrossOrigin
     public Response getUsers() {
     	final List<User> users = userService.findByPattern();
 		return Response.status(200).entity(users).build();
@@ -37,6 +39,7 @@ public class UserResource {
     @GET
     @Path("/{id}")
     @Produces("application/json")
+    @CrossOrigin
     public Response  getUsers(@PathParam("id") final String userId) {
     	 User user = userService.findById(userId);
     	 if(user == null) {
@@ -47,6 +50,7 @@ public class UserResource {
 
     @POST
     @Consumes("application/json")
+    @CrossOrigin
     public Response  createUser( final User user) {
     	userService.save(user);
     	 return Response.status(201).build();
@@ -56,6 +60,7 @@ public class UserResource {
     @Path("/{id}")
     @Consumes("application/json")
   @Produces("application/json")
+    @CrossOrigin
     public Response  updateUser(@PathParam("id") final String userId, final User user) {
     	user.setId(userId);
     	userService.update(user);
@@ -64,6 +69,7 @@ public class UserResource {
 
     @DELETE
     @Path("/{id}")
+    @CrossOrigin
     public Response  deleteUser(@PathParam("id") final String userId) {
     	System.out.println("Change.");
     	userService.delete(userId);

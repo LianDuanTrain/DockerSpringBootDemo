@@ -32,8 +32,8 @@ public class UserService {
 	}
 
 	public void save(final User user) {
-		String id = UUID.randomUUID().toString();;
-		user.setId(id);
+		String id = user.getId();
+		//user.setId(id);
 		map.put(id, user);
 		
 	}

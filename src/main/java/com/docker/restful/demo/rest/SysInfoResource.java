@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.docker.restful.demo.entities.SysInfo;
 import com.docker.restful.demo.services.SysInfoService;
@@ -22,6 +23,7 @@ public class SysInfoResource {
 	   
     @GET
     @Produces("application/json")
+    @CrossOrigin
     public Response getInfo() {
     	log.info("getInfo start");
     	SysInfo sysInfo  = sysInfoService.getSysInfo();
