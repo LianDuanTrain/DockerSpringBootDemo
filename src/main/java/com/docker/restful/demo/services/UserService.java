@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import javax.ws.rs.NotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -16,6 +18,7 @@ import com.docker.restful.demo.entities.User;
 
 @Service
 public class UserService {
+	 Logger logger = LoggerFactory.getLogger(UserService.class);
 	@Autowired
 	private RedisTemplate redisTemplate;
 //	Map<String, User> map = new ConcurrentHashMap<String, User>();
@@ -28,6 +31,7 @@ public class UserService {
 			User user = (User)redisTemplate.opsForValue().get(key);
 			list.add(user);
 		}
+		logger.info("Find User. User size is   {}", list.size());
 		return  list;
 	}
 
@@ -41,8 +45,9 @@ public class UserService {
 	}
 
 	public void save(final User user) {
-		String id = user.getId();
 		
+		String id = user.getId();
+		logger.info("Add User. ID is {}", id);
 		ValueOperations<String, User> operations = redisTemplate.opsForValue();
 		operations.set(id, user);
 		//map.put(id, user);
@@ -64,7 +69,8 @@ public class UserService {
 	public void delete(final String userId) {
 
 		if (redisTemplate.hasKey(userId)) {
-			redisTemplate.delete(redisTemplate);
+			logger.info("Delete User. ID is {}", userId);
+			redisTemplate.delete(userId);
 			
 		} else {
 			throw new NotFoundException("User does not exist in the DB");
