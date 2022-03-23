@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.docker.restful.demo.controller.SysInfoResource;
 import com.docker.restful.demo.entities.SysInfo;
-import com.docker.restful.demo.rest.SysInfoResource;
 
 @Service
 public class SysInfoService {
