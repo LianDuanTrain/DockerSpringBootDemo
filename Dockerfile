@@ -1,12 +1,6 @@
 # Two Stages Docker Build File
-# Dockerfile CMDs
-# V1 : FROM, LABEL, ADD, EXPOSE, ENTRYPOINT
-# V2 : RUN, COPY, USER, WORKDIR, CMD 
-# V4 : ARG, ENV
-# V5 :  FROM XXXX AS stage name, - COPY --from=stage name /file
-# Command
-# docker build -t lianduantraining/springbootdemo:v3 .  
-# docker push lianduantraining/springbootdemo:v3
+# docker build -t lianduantraining/springbootdemo:v7 .  
+# docker push lianduantraining/springbootdemo:v7
 # Stage One - compile Java src code 
 #
 # Parent Image
