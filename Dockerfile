@@ -26,7 +26,7 @@ RUN mvn -DskipTests=true -f pom.xml clean package
 # Parent Image
 FROM openjdk:8-jre-slim
 # Add metadata to an image
-LABEL version="V 5.0" description="Springboot Microservice - CRUD User" by="Lian"
+LABEL version="V 7.0" description="Springboot Microservice - CRUD User" by="Lian"
 # ARG defines a variable that users can pass at build-time to the builder with the docker build command using 
 ARG inputSourceJarName=target/demo-0.0.1-SNAPSHOT.jar 
 ARG inputAppFolderName=myMicroservice
