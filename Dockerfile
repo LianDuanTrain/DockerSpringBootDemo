@@ -1,10 +1,11 @@
 # Two Stages Docker Build File
 # docker build -t lianduantraining/springbootdemo:v7 .  
 # docker push lianduantraining/springbootdemo:v7
-# Stage One - compile Java src code 
-#
-# Parent Image
-FROM maven:3.6-jdk-8-openj9 AS build 
+##########################################
+# Stage One - Compile Java Src Code 
+##########################################
+# Base 3.8.3-openjdk-8
+FROM 3.8.3-openjdk-8 AS build 
 # Cerate build user home
 ENV APP_Build_Home=/home/build
 # COPY src
@@ -20,10 +21,10 @@ USER build
 WORKDIR ${APP_Build_Home}
 # Build
 RUN mvn -DskipTests=true -f pom.xml clean package
-#
+##########################################
 # Stage Two - Create Microservice Image
-#
-# Parent Image
+##########################################
+# Base openjdk:8-jre-slim
 FROM openjdk:8-jre-slim
 # Add metadata to an image
 LABEL version="V 7.0" description="Springboot Microservice - CRUD User" by="Lian"
