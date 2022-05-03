@@ -41,7 +41,7 @@ ENV APP_Build_Home=/home/build
 COPY --from=build ${APP_Build_Home}/${inputSourceJarName} /${appFolderName}/${appJarName}  
 # Run /bin/bash
 # Add user and user group
-RUN  apt-get update && apt-get install --assume-yes && apt-get clean \
+RUN  apt-get update && apt-get install --assume-yes && apt-get clean; \
      groupadd -r microservice && useradd -r -g microservice microservice;  \
      chown -R microservice:microservice /${appFolderName};
 # Switch User
