@@ -1,11 +1,11 @@
 # Two Stages Docker Build File
-# docker build -t lianduantraining/springbootdemo:v7 .  
+# docker build --no-cache -t lianduantraining/springbootdemo:v7 . .  
 # docker push lianduantraining/springbootdemo:v7
 ##########################################
 # Stage One - Compile Java Src Code 
 ##########################################
-# Base 3.8.3-openjdk-8
-FROM 3.8.3-openjdk-8 AS build 
+# Base image is maven:3.8.3-openjdk-8
+FROM maven:3.8.3-openjdk-8 AS build 
 # Cerate build user home
 ENV APP_Build_Home=/home/build
 # COPY src
@@ -24,7 +24,7 @@ RUN mvn -DskipTests=true -f pom.xml clean package
 ##########################################
 # Stage Two - Create Microservice Image
 ##########################################
-# Base openjdk:8-jre-slim
+# Base  image is openjdk:8-jre-slim
 FROM openjdk:8-jre-slim
 # Add metadata to an image
 LABEL version="V 7.0" description="Springboot Microservice - CRUD User" by="Lian"
@@ -36,12 +36,12 @@ ENV appJarName=demo.jar
 ENV appFolderName=${inputAppFolderName}
 # Stage one build home
 ENV APP_Build_Home=/home/build
-# Copy jar file from Stage one to image
+# Copy jar file from Stage One to Stage Two
 # COPY ${inputSourceJarName} /${appFolderName}/${appJarName}
 COPY --from=build ${APP_Build_Home}/${inputSourceJarName} /${appFolderName}/${appJarName}  
 # Run /bin/bash
 # Add user and user group
-RUN  apt-get update && apt-get install --assume-yes && apt-get clean; \
+RUN  apt-get update && apt-get install -y --no-install-recommends && apt-get clean; \
      groupadd -r microservice && useradd -r -g microservice microservice;  \
      chown -R microservice:microservice /${appFolderName};
 # Switch User
