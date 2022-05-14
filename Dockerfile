@@ -42,7 +42,7 @@ COPY --from=build ${APP_Build_Home}/${inputSourceJarName} /${appFolderName}/${ap
 # Run /bin/bash
 # Add user and user group
 RUN  apt-get update && apt-get install -y --no-install-recommends && apt-get clean; \
-     groupadd -r microservice && useradd -u 1001 -r -g microservice microservice;  \
+     groupadd -r microservice && useradd -u 1111 -r -g microservice microservice;  \
      chown -R microservice:microservice /${appFolderName};
 # Switch User
 USER microservice
